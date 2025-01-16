@@ -8,32 +8,24 @@ use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
-    /**
-     * Display job details.
-     */
-    // public function details($jobId)
+    // public function programming()
     // {
-    //     // Fetch the job based on the jobId
-    //     $job = Job::find($jobId);
+    //     // Retrieve all jobs
+    //     $jobs = Job::all();
 
-    //     // If job not found, handle error (optional)
-    //     if (!$job) {
-    //         return redirect()->back()->withErrors('Job not found!');
-    //     }
-
-    //     // Pass the job to the view
-    //     return view('pages.details', compact('job'));
+    //     // Pass the jobs to the view
+    //     return view('pages.programing', ['jobs' => $jobs]);
     // }
+
+
     public function details($jobId)
     {
-        // Check if the job exists, and if it does, retrieve it
-        $job = Job::findOrFail($jobId); 
-    
+        // Retrieve the job by ID
+        $job = Job::find($jobId);
+
         // Pass the job to the view
         return view('pages.details', ['job' => $job]);
     }
-    
-    
 
     /**
      * Store a new job (offre) and assign it to the current user.
@@ -70,4 +62,40 @@ class JobController extends Controller
         // Redirect to the "manage jobs" page with success
         return redirect()->route('managejobs')->with('success', 'Job created successfully!');
     }
+
+
+
+
+
+    public function search(Request $request)
+    {
+        $query = Job::query();
+
+        if ($request->filled('search')) {
+            $query->where('title', 'like', "%{$request->search}%");
+        }
+
+        if ($request->filled('location')) {
+            $query->where('location', 'like', "%{$request->location}%");
+        }
+
+        // Paginate the results
+        $jobs = $query->paginate(10);
+
+        return view('welcome', compact('jobs', 'request'));
+    }
+
+
+    public function filterByCategory($category)
+    {
+        // Fetch jobs that match the specified category
+        $jobs = Job::where('category', $category)->paginate(10);  // Change 10 to your desired number of items per page
+
+        // Return the filtered jobs to the appropriate view
+        return view('welcome', ['jobs' => $jobs, 'category' => $category]);
+    }
+
+
+
+
 }

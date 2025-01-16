@@ -9,7 +9,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', ['search' => '', 'location' => '']);
 })->name('welcome');
 
 
@@ -39,6 +39,14 @@ Route::post('/store', [JobController::class, 'store'])->name('jobs.store');
 Route::get('/apply/{jobId}', [ApplyController::class, 'index'])->name('apply');
 
 Route::post('/apply/{jobId}', [ApplyController::class, 'store'])->name('apply.store');
+
+
+Route::get('/jobs/search', [JobController::class, 'search'])->name('jobs.search');
+
+
+Route::get('/jobs/filter/{category}', [JobController::class, 'filterByCategory'])->name('jobs.filter');
+
+
 
 
 require __DIR__.'/auth.php';

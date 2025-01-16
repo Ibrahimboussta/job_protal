@@ -4,7 +4,10 @@ namespace App\Providers;
 
 use App\Models\Apply;
 use App\Models\Job;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,11 +26,16 @@ class AppServiceProvider extends ServiceProvider
     {
         //
 
-        $jobs = Job::latest()->get();
-        view()->share('jobs', $jobs);
+        Paginator::useTailwind();
 
+        if (Schema::hasTable('offres')) {
+            $jobs = \App\Models\Job::latest()->paginate(6); // Display 9 jobs per page
+            view()->share('jobs', $jobs);
+        }
 
-        $applications = Apply::with('job')->latest()->get();
-        view()->share('applications', $applications);
+        // if (Schema::hasTable('applies')) {
+        //     $applications = \App\Models\Apply::with('job')->latest()->get();
+        //     view()->share('applications', $applications);
+        // }
     }
 }

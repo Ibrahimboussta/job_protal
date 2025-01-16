@@ -12,18 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('offres', function (Blueprint $table) {
-            $table->id();
+            $table->id(); // Primary key
             $table->string('title');
             $table->string('description');
             $table->string('category');
             $table->string('location');
             $table->string('levels');
             $table->integer('salary');
-            $table->foreignId('user_id')
+            $table->foreignId('user_id') // Foreign key reference to users table
                 ->constrained()
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->timestamps();
+            $table->timestamps(); // created_at and updated_at
         });
     }
 

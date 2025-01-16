@@ -10,7 +10,7 @@
             </div>
             <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div class="bg-white dark:bg-gray-700 px-4 pb-4 pt-8 sm:rounded-lg sm:px-10 sm:pb-6 sm:shadow">
-                    <form class="space-y-6" method="POST" action="{{ route('register') }}">
+                    <form class="space-y-6" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
                         <div>
                             <x-input-label for="name" :value="__('Name')" />
@@ -45,6 +45,13 @@
                                 name="password_confirmation" required autocomplete="new-password" />
 
                             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                        </div>
+
+                        <div class="mt-4">
+                            <x-input-label for="profile_image" :value="__('Profile Image')" />
+                            <x-text-input id="profile_image" class="block mt-1 w-full" type="file" name="profile_image"
+                                accept="image/*" />
+                            <x-input-error :messages="$errors->get('profile_image')" class="mt-2" />
                         </div>
 
 

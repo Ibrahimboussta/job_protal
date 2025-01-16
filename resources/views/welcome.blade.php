@@ -9,17 +9,22 @@
                     Here -
                     Explore the Best Job Opportunities and Take the First Step Toward Your Future!</p>
 
-                <div
+                <form action="{{ route('jobs.search') }}" method="GET"
                     class="flex flex-col sm:flex-row items-center bg-white border rounded-lg shadow-md p-2 space-y-3 sm:space-y-0 sm:space-x-2">
-                    <input type="text" placeholder="Search for jobs"
-                        class="flex-grow px-4 py-2 text-gray-700 placeholder-gray-400 border border-white outline-none rounded-lg" />
-                    <div class="w-px h-8 bg-gray-300 sm:hidden hidden lg-block"></div>
-                    <input type="text" placeholder="Location"
-                        class="flex-grow px-4 py-2 text-gray-700 placeholder-gray-400 border border-white outline-none rounded-lg" />
-                    <button class="bg-blue-700 text-white px-5 py-2 rounded-lg focus:ring-opacity-50 w-full sm:w-auto">
+                    <input type="text" name="search" placeholder="Search for jobs"
+                        class="flex-grow px-4 py-2 text-gray-700 placeholder-gray-400 border border-gray-300 outline-none rounded-lg focus:ring focus:ring-blue-500" />
+
+                    <div class="hidden sm:block w-px h-8 bg-gray-300"></div>
+
+                    <input type="text" name="location" placeholder="Location"
+                        class="flex-grow px-4 py-2 text-gray-700 placeholder-gray-400 border border-gray-300 outline-none rounded-lg focus:ring focus:ring-blue-500" />
+
+                    <button type="submit"
+                        class="bg-blue-700 text-white px-5 py-2 rounded-lg focus:ring focus:ring-blue-500 w-full sm:w-auto">
                         Search
                     </button>
-                </div>
+                </form>
+
 
             </div>
         </div>
@@ -55,77 +60,45 @@
             <!-- Sidebar visible on desktop for filters -->
             <div class="lg:w-[20vw] w-full mb-8 lg:mb-0 hidden lg:block">
                 <div class="w-full lg:w-80 p-4 space-y-6">
-                    <!-- Current Search Section -->
-                    <div>
-                        <h3 class="text-lg font-semibold mb-2 dark:text-white">Current Search</h3>
-                        <div class="flex flex-wrap gap-2">
-                            <span
-                                class="dark:text-black px-4 py-2 bg-blue-100 border border-blue-600 text-blue-600 text-sm rounded-md">full
-                                stack</span>
-                            <span
-                                class="dark:text-black px-4 py-2 bg-red-100 border border-red-600 text-red-600 text-sm rounded-md">bangalore</span>
-                        </div>
-                    </div>
 
                     <!-- Search by Categories Section -->
                     <div>
                         <h3 class="text-lg font-semibold mb-2 dark:text-white">Search by Categories</h3>
                         <ul class="space-y-5">
-                            <li class="flex items-center">
-                                <input type="checkbox" id="programming"
-                                    class="h-4 w-4 text-blue-600 border-gray-300 rounded">
-                                <label for="programming" class="ml-2 text-sm text-gray-700 dark:text-white">Programming
-                                    (24)</label>
-                            </li>
-                            <li class="flex items-center">
-                                <input type="checkbox" id="marketing" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
-                                <label for="marketing" class="ml-2 text-sm text-gray-700 dark:text-white">Marketing
-                                    (41)</label>
-                            </li>
-                            <li class="flex items-center">
-                                <input type="checkbox" id="designing" class="h-4 w-4 text-blue-600 border-gray-300 rounded"
-                                    checked>
-                                <label for="designing" class="ml-2 text-sm text-gray-700 dark:text-white">Designing
-                                    (15)</label>
-                            </li>
-                            <li class="flex items-center">
-                                <input type="checkbox" id="accounting"
-                                    class="h-4 w-4 text-blue-600 border-gray-300 rounded">
-                                <label for="accounting" class="ml-2 text-sm text-gray-700 dark:text-white">Accounting
-                                    (22)</label>
-                            </li>
-                            <li class="flex items-center">
-                                <input type="checkbox" id="analytics" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
-                                <label for="analytics" class="ml-2 text-sm text-gray-700 dark:text-white">Analytics
-                                    (41)</label>
-                            </li>
-                        </ul>
-                    </div>
 
-                    <!-- Search by Location Section -->
-                    <div>
-                        <h3 class="text-lg font-semibold mb-2 dark:text-white">Search by Location</h3>
-                        <ul class="space-y-5">
-                            <li class="flex items-center">
-                                <input type="checkbox" id="bangalore" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
-                                <label for="bangalore" class="ml-2 text-sm text-gray-700 dark:text-white">Bangalore
-                                    (24)</label>
+                            <li class="flex items-center" data-category="programming">
+                                <a href="{{ route('jobs.filter', ['category' => 'programming']) }}"
+                                    class="text-sm underline hover:text-blue-800 dark:text-white dark:hover:text-gray-200">
+                                    Programming ({{ $jobs->where('category', 'programming')->count() }})
+                                </a>
                             </li>
-                            <li class="flex items-center">
-                                <input type="checkbox" id="hyderabad" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
-                                <label for="hyderabad" class="ml-2 text-sm text-gray-700 dark:text-white">Hyderabad
-                                    (41)</label>
+
+
+                            <li class="flex items-center" data-category="marketing">
+                                <a href="{{ route('jobs.filter', ['category' => 'marketing']) }}"
+                                    class="text-sm underline hover:text-blue-800 dark:text-white dark:hover:text-gray-200">
+                                    Marketing ({{ $jobs->where('category', 'marketing')->count() }})
+                                </a>
                             </li>
-                            <li class="flex items-center">
-                                <input type="checkbox" id="mumbai" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
-                                <label for="mumbai" class="ml-2 text-sm text-gray-700 dark:text-white">Mumbai (15)</label>
+                            <li class="flex items-center" data-category="design">
+                                <a href="{{ route('jobs.filter', ['category' => 'designing']) }}"
+                                    class="text-sm underline hover:text-blue-800 dark:text-white dark:hover:text-gray-200">
+                                    Designing ({{ $jobs->where('category', 'design')->count() }})
+                                </a>
                             </li>
-                            <li class="flex items-center">
-                                <input type="checkbox" id="chennai"
-                                    class="h-4 w-4 text-blue-600 border-gray-300 rounded">
-                                <label for="chennai" class="ml-2 text-sm text-gray-700 dark:text-white">Chennai
-                                    (22)</label>
+                            <li class="flex items-center" data-category="accounting">
+                                <a href="{{ route('jobs.filter', ['category' => 'accounting']) }}"
+                                    class="text-sm underline hover:text-blue-800 dark:text-white dark:hover:text-gray-200">
+                                    Accounting ({{ $jobs->where('category', 'accounting')->count() }})
+                                </a>
                             </li>
+                            <li class="flex items-center" data-category="analytics">
+                                <a href="{{ route('jobs.filter', ['category' => 'analytics']) }}"
+                                    class="text-sm underline hover:text-blue-800 dark:text-white dark:hover:text-gray-200">
+                                    Analytics ({{ $jobs->where('category', 'analytics')->count() }})
+                                </a>
+                            </li>
+
                         </ul>
                     </div>
                 </div>
@@ -154,27 +127,32 @@
                             <li class="flex items-center">
                                 <input type="checkbox" id="programming"
                                     class="h-4 w-4 text-blue-600 border-gray-300 rounded">
-                                <label for="programming" class="ml-2 text-sm text-gray-700">Programming (24)</label>
+                                <label for="programming" class="ml-2 text-sm text-gray-700">Programming
+                                    ({{ count($jobs) }})</label>
                             </li>
                             <li class="flex items-center">
                                 <input type="checkbox" id="marketing"
                                     class="h-4 w-4 text-blue-600 border-gray-300 rounded">
-                                <label for="marketing" class="ml-2 text-sm text-gray-700">Marketing (41)</label>
+                                <label for="marketing" class="ml-2 text-sm text-gray-700">Marketing
+                                    ({{ count($jobs) }})</label>
                             </li>
                             <li class="flex items-center">
                                 <input type="checkbox" id="designing"
                                     class="h-4 w-4 text-blue-600 border-gray-300 rounded" checked>
-                                <label for="designing" class="ml-2 text-sm text-gray-700">Designing (15)</label>
+                                <label for="designing" class="ml-2 text-sm text-gray-700">Designing
+                                    ({{ count($jobs) }})</label>
                             </li>
                             <li class="flex items-center">
                                 <input type="checkbox" id="accounting"
                                     class="h-4 w-4 text-blue-600 border-gray-300 rounded">
-                                <label for="accounting" class="ml-2 text-sm text-gray-700">Accounting (22)</label>
+                                <label for="accounting" class="ml-2 text-sm text-gray-700">Accounting
+                                    ({{ count($jobs) }})</label>
                             </li>
                             <li class="flex items-center">
                                 <input type="checkbox" id="analytics"
                                     class="h-4 w-4 text-blue-600 border-gray-300 rounded">
-                                <label for="analytics" class="ml-2 text-sm text-gray-700">Analytics (41)</label>
+                                <label for="analytics" class="ml-2 text-sm text-gray-700">Analytics
+                                    ({{ count($jobs) }})</label>
                             </li>
                         </ul>
                     </div>
@@ -228,42 +206,59 @@
                     <!-- Job Cards Container -->
                     <div class="flex flex-wrap gap-6 justify-center sm:justify-start">
                         <!-- Job Card -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                            @foreach ($jobs as $job)
-                                <div
-                                    class="flex-none w-full sm:w-[260px] bg-white border border-gray-300 rounded-lg shadow-md p-6 hover:border-blue-500 dark:bg-gray-800">
-                                    <img src="{{ asset('images/microsoft_logo.svg') }}" alt="Company Logo" class="mb-4">
-                                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">{{ $job->title }}</h3>
-                                    <div class="flex items-center space-x-2 mt-2 mb-4">
-                                        <span class="px-3 py-1 bg-blue-100 text-blue-600 text-xs rounded-full">{{ $job->location }}</span>
-                                        <span class="px-3 py-1 bg-red-100 text-red-600 text-xs rounded-full">{{ $job->levels }}</span>
-                                    </div>
-                                    <p class="text-gray-600 text-sm mb-4 dark:text-white line-clamp-4">
-                                        {{ Str::limit($job->description, 100) }} <!-- Display a shortened description -->
-                                    </p>
-                                    <div class="flex space-x-4">
-                                        @auth
-                                            <a href="{{ route('apply', ['jobId' => $job->id]) }}">
-                                                <button
-                                                    class="bg-blue-500 text-white px-3 py-2 text-sm rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                                    Apply now
-                                                </button>
-                                            </a>
-                                        @else
-                                            <button class="bg-gray-300 text-gray-500 px-2 py-2 text-sm rounded-lg cursor-not-allowed">
-                                                Apply (Login Required)
+                        @if ($jobs->isEmpty())
+                            <div class="font-bold text-3xl pt-8 flex justify-center w-full text-gray-700">
+                                No jobs found !🙄
+                            </div>
+                        @else
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                @foreach ($jobs as $job)
+                                    <div
+                                        class="flex-none w-full sm:w-[260px] bg-white border border-gray-300 rounded-lg shadow-md p-6 hover:border-blue-500 dark:bg-gray-800">
+                                        <img src="{{ asset('images/microsoft_logo.svg') }}" alt="Company Logo"
+                                            class="mb-4">
+                                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+                                            {{ $job->title }}</h3>
+                                        <div class="flex items-center space-x-2 mt-2 mb-4">
+                                            <span
+                                                class="px-3 py-1 bg-blue-100 text-blue-600 text-xs rounded-full">{{ $job->location }}</span>
+                                            <span
+                                                class="px-3 py-1 bg-red-100 text-red-600 text-xs rounded-full">{{ $job->levels }}</span>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-4 dark:text-white line-clamp-4">
+                                            {{ Str::limit($job->description, 100) }}
+                                            <!-- Display a shortened description -->
+                                        </p>
+                                        <div class="flex space-x-4">
+                                            @auth
+                                                <a href="{{ route('apply', ['jobId' => $job->id]) }}">
+                                                    <button
+                                                        class="bg-blue-500 text-white px-3 py-2 text-sm rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                        Apply now
+                                                    </button>
+                                                </a>
+                                            @else
+                                                <a href="/register">
+                                                    <button
+                                                        class="bg-gray-300 text-gray-500 px-2 py-2 text-sm rounded-lg cursor-not-allowed">
+                                                        Apply (Login Required)
+                                                    </button>
+                                                </a>
+                                            @endauth
+                                            <button
+                                                class="bg-gray-100 text-gray-600 px-3 py-2 text-sm rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                                                <a href="{{ route('job.details', ['jobId' => $job->id]) }}">Learn more</a>
                                             </button>
-                                        @endauth
-                                        <button
-                                        class="bg-gray-100 text-gray-600 px-3 py-2 text-sm rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                                        <a href="{{ route('job.details', ['jobId' => $job->id]) }}">Learn more</a>
-                                    </button>
-
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
+                        @endif
+
+
+                        <div class="mt-6">
+                            {{ $jobs->links() }}
                         </div>
-                        
 
 
 

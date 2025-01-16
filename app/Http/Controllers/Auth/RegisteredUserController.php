@@ -34,13 +34,24 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => ['required', 'in:Recruter,Candidate'], // Validate role explicitly
+            'profile_image' => ['nullable', 'image', 'max:2048'],  // Validate image upload
         ]);
+
+
+        $imagePath = null;
+    // Store image if uploaded
+    if ($request->hasFile('profile_image')) {
+        $imagePath = $request->file('profile_image')->store('profile_images', 'public');
+    }
+        
+
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            'profile_image' => $imagePath,
         ]);
 
         event(new Registered($user));

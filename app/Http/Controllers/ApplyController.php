@@ -32,7 +32,7 @@ class ApplyController extends Controller
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:100',
             'resume' => 'required|file|mimes:pdf,doc,docx|max:2048', // Max size 2MB
-            'job_id' => 'required|exists:offres,id', // Ensure job exists
+            'job_id' => 'required|exists:offres,id',
         ]);
 
         // Ensure the user is logged in
@@ -53,7 +53,7 @@ class ApplyController extends Controller
         ]);
 
 
-        
+
         return redirect()->route('welcome')->with('success', 'Application submitted successfully!');
     }
 

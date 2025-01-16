@@ -17,24 +17,24 @@
                             <img src="{{ asset('images/suitcase_icon.svg') }}" alt="Company icon">
                             <span>{{ $job->company_name }}</span> <!-- Dynamic company name -->
                         </div>
-                
+
                         <div class="flex items-center gap-1">
                             <img src="{{ asset('images/location_icon.svg') }}" alt="Location icon">
                             <span>{{ $job->location }}</span> <!-- Dynamic location -->
                         </div>
-                
+
                         <div class="flex items-center gap-1">
                             <img src="{{ asset('images/person_icon.svg') }}" alt="Job level icon">
                             <span>{{ $job->levels }}</span> <!-- Dynamic job level -->
                         </div>
-                
+
                         <div class="flex items-center gap-1">
                             <img src="{{ asset('images/money_icon.svg') }}" alt="Salary icon">
                             <span>CTC: ${{ number_format($job->salary, 0) }}</span> <!-- Dynamic salary -->
                         </div>
                     </div>
                 </div>
-                
+
             </div>
 
 
@@ -53,7 +53,7 @@
                             </button>
                         </a>
                     @endauth
-                </div> <span class="text-sm ">Posted 25 mins ago </span>
+                </div> <span class="text-sm ">{{ $job->created_at->diffForHumans() }} </span>
             </div>
         </div>
     </section>
@@ -213,12 +213,12 @@
                                     class="bg-gray-100 text-gray-600 px-3 py-2 text-sm rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
                                     <a href="{{ route('job.details', ['jobId' => $job->id]) }}">Learn more</a>
                                 </button>
-                                    
+
                                 </div>
                             </div>
                         @endforeach
                     </div>
-                    
+
 
 
 
@@ -259,12 +259,12 @@
                                     class="bg-gray-100 text-gray-600 px-3 py-2 text-sm rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
                                     <a href="{{ route('job.details', ['jobId' => $job->id]) }}">Learn more</a>
                                 </button>
-                                    
+
                                 </div>
                             </div>
                         @endforeach
                     </div>
-                    
+
 
 
 

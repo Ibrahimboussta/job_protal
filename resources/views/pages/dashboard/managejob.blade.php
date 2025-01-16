@@ -27,17 +27,20 @@
                     <tbody>
                         <!-- Row 1 -->
                         @foreach ($jobs as $job)
-                            <tr class="border-t border-gray-200">
-                                <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">{{ $job->id }}</td>
-                                <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">{{ $job->title }}</td>
-                                <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">{{ $job->category }}</td>
-                                <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">{{ $job->levels }}</td>
-                                <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">{{ $job->created_at }}</td>
-                                <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">{{ $job->location }}</td>
-                                <td class="py-4 px-4 dark:text-white dark:bg-gray-800">
-                                    <input type="checkbox" checked class="form-checkbox h-5 w-5 text-blue-500">
-                                </td>
-                            </tr>
+                            @if ($job->user_id == Auth::user()->id)
+                                <tr class="border-t border-gray-200">
+                                    <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">{{ $job->id }}</td>
+                                    <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">{{ $job->title }}</td>
+                                    <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">{{ $job->category }}</td>
+                                    <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">{{ $job->levels }}</td>
+                                    <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">{{ $job->created_at }}
+                                    </td>
+                                    <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">{{ $job->location }}</td>
+                                    <td class="py-4 px-4 dark:text-white dark:bg-gray-800">
+                                        <input type="checkbox" checked class="form-checkbox h-5 w-5 text-blue-500">
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
 
 

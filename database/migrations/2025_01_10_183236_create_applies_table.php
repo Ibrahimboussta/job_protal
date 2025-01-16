@@ -11,22 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('applies', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete(); // Link to users table
-            $table->foreignId('job_id')->constrained('offres')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->string('full_name');
-            $table->string('email');
-            $table->string('address');
-            $table->string('city');
-            $table->string('resume'); // Store path to the file
-            $table->timestamps();
+        if (!Schema::hasTable('applies')) {
+            Schema::create('applies', function (Blueprint $table) {
+                $table->id();
+                $table->string('full_name');
+                $table->string('email');
+                $table->string('address');
+                $table->string('city');
+                $table->string('resume'); // Store path to the file
+                $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
-        });
+                $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete(); // Link to users table
+                $table->foreignId('job_id')->constrained('offres')->cascadeOnUpdate()->cascadeOnDelete();
+            });
+        }
     }
-
     /**
      * Reverse the migrations.
      */

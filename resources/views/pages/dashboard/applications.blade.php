@@ -19,7 +19,7 @@
                     </thead>
                     <tbody>
                         @foreach ($applications as $application)
-                            <tr class="border-t border-gray-200">
+                            <tr id="application-row-{{ $application->id }}" class="border-t border-gray-200" data-status="">
                                 <!-- Record ID -->
                                 <td class="py-4 px-4">{{ $loop->iteration }}</td>
 
@@ -30,8 +30,8 @@
                                 <td class="py-4 px-4">{{ $application->email }}</td>
 
                                 <!-- Job Title -->
-                                <td class="py-4 px-4">{{ $application->job ? $application->job->title : 'Job not found' }}</td>
-
+                                <td class="py-4 px-4">{{ $application->job ? $application->job->title : 'Job not found' }}
+                                </td>
 
                                 <!-- Applicant City -->
                                 <td class="py-4 px-4">{{ $application->city }}</td>
@@ -47,10 +47,11 @@
                                 <!-- Accept/Reject Dropdown -->
                                 <td class="py-4 px-4">
                                     <select name="status_{{ $application->id }}" id="status_{{ $application->id }}"
-                                        class="border border-gray-400 rounded">
+                                        class="status-dropdown border border-gray-400 rounded px-7 py-1"
+                                        onchange="updateStatus({{ $application->id }})">
                                         <option value="" disabled selected>Select</option>
-                                        <option value="accept" class="text-green-500">Accept</option>
-                                        <option value="reject" class="text-red-500">Reject</option>
+                                        <option value="accept">Accept</option>
+                                        <option value="reject">Reject</option>
                                     </select>
                                 </td>
                             </tr>
@@ -62,6 +63,59 @@
         </div>
     @endsection
 
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Load saved statuses from localStorage and set the dropdown and row color
+            const rows = document.querySelectorAll("tr[data-status]");
+            rows.forEach((row) => {
+                const id = row.id.replace("application-row-", "");
+                const storedStatus = localStorage.getItem(`application-status-${id}`);
+
+                if (storedStatus) {
+                    // Set dropdown value
+                    const dropdown = document.getElementById(`status_${id}`);
+                    dropdown.value = storedStatus;
+
+                    // Set row and dropdown background color
+                    updateRowColor(row, dropdown, storedStatus);
+                }
+            });
+        });
+
+        // Update localStorage, row background, and dropdown color when the status changes
+        function updateStatus(id) {
+            const dropdown = document.getElementById(`status_${id}`);
+            const status = dropdown.value;
+
+            // Save status to localStorage
+            localStorage.setItem(`application-status-${id}`, status);
+
+            // Update row and dropdown background color
+            const row = document.getElementById(`application-row-${id}`);
+            updateRowColor(row, dropdown, status);
+        }
+
+        // Function to update row and dropdown background color based on status
+        function updateRowColor(row, dropdown, status) {
+            // Update row background color
+            row.classList.remove("bg-green-200", "bg-red-200");
+            if (status === "accept") {
+                row.classList.add("bg-green-200");
+            } else if (status === "reject") {
+                row.classList.add("bg-red-200");
+            }
+
+            // Update dropdown background color
+            dropdown.classList.remove("bg-green-200", "bg-red-200");
+            if (status === "accept") {
+                dropdown.classList.add("bg-green-200");
+            } else if (status === "reject") {
+                dropdown.classList.add("bg-red-200");
+            }
+        }
+    </script>
 
 
 </x-app-layout>
