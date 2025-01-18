@@ -3,34 +3,46 @@
     <section class="bg-white dark:bg-gray-800 px-16 pt-8">
 
         <div
-            class="flex flex-col sm:flex-row items-center justify-between p-8 border border-blue-500 bg-[#F2F7FF] rounded-md">
+            class="flex flex-col sm:flex-row items-center justify-between p-8 border border-blue-500 bg-[#F2F7FF] rounded-md dark:bg-gray-800 dark:border-gray-300">
             <div class="flex items-center gap-x-9 py-8 ">
 
                 <div class="border border-gray-300 py-8 px-3 bg-white shadow">
-                    <img class="w-40" src="{{ asset('images/microsoft_logo.svg') }}" alt="">
+                    <img class="w-40" src="{{ asset('storage/' . $job->company_image) }}" alt="">
                 </div>
 
                 <div class="flex flex-col gap-y-4">
-                    <h1 class="text-3xl font-semibold">{{ $job->title }}</h1> <!-- Job title -->
+                    <h1 class="text-3xl font-semibold dark:text-white">{{ $job->title }}</h1> <!-- Job title -->
                     <div class="flex items-center gap-x-6">
                         <div class="flex items-center gap-1">
-                            <img src="{{ asset('images/suitcase_icon.svg') }}" alt="Company icon">
-                            <span>{{ $job->company_name }}</span> <!-- Dynamic company name -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-5 dark:text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                            </svg>
+
+                            <span class="dark:text-white">{{ $job->location }}</span> <!-- Dynamic location -->
                         </div>
 
                         <div class="flex items-center gap-1">
-                            <img src="{{ asset('images/location_icon.svg') }}" alt="Location icon">
-                            <span>{{ $job->location }}</span> <!-- Dynamic location -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-5 dark:text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            </svg>
+
+                            <span class="dark:text-white">{{ $job->levels }}</span> <!-- Dynamic job level -->
                         </div>
 
                         <div class="flex items-center gap-1">
-                            <img src="{{ asset('images/person_icon.svg') }}" alt="Job level icon">
-                            <span>{{ $job->levels }}</span> <!-- Dynamic job level -->
-                        </div>
-
-                        <div class="flex items-center gap-1">
-                            <img src="{{ asset('images/money_icon.svg') }}" alt="Salary icon">
-                            <span>CTC: ${{ number_format($job->salary, 0) }}</span> <!-- Dynamic salary -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-5 dark:text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+                            </svg>
+                            <span class="dark:text-white">CTC: ${{ number_format($job->salary, 0) }}</span>
+                            <!-- Dynamic salary -->
                         </div>
                     </div>
                 </div>
@@ -53,7 +65,7 @@
                             </button>
                         </a>
                     @endauth
-                </div> <span class="text-sm ">{{ $job->created_at->diffForHumans() }} </span>
+                </div> <span class="text-sm dark:text-white">{{ $job->created_at->diffForHumans() }} </span>
             </div>
         </div>
     </section>
@@ -65,47 +77,12 @@
         <div class="flex gap-x-16">
             <!-- Main Job Description Card -->
             <div class="flex-1">
-                <h1 class="text-2xl font-semibold mb-4">Job description</h1>
-                <p class="text-gray-700 mb-8 text-sm">
-                    We are seeking a highly skilled Full Stack Developer to join our dynamic and innovative team. The ideal
-                    candidate will
-                    have a passion for developing scalable web applications and working across the entire technology stack,
-                    from front-end user
-                    interfaces to back-end database and server management.
-                </p>
-                <p class="text-gray-700 mb-8">
-                    You will collaborate with cross-functional teams to design, develop, and implement new features,
-                    ensuring high performance,
-                    responsiveness, and security of the application. If you thrive in fast-paced environments, are
-                    detail-oriented, and love to
-                    solve complex technical challenges, we'd love to meet you!
+                <h1 class="text-2xl font-semibold mb-4 dark:text-white">Job description</h1>
+                <p class="text-gray-700 mb-8 text-sm dark:text-white">
+                    {{ $job->description }}
                 </p>
 
-                <h2 class="text-xl font-semibold mb-3">Key responsibilities</h2>
-                <ul class="list-decimal list-inside text-gray-700 space-y-2 mb-6 text-sm">
-                    <li>Build, test, and deploy highly responsive web applications using modern front-end and back-end
-                        technologies.</li>
-                    <li>Design and implement user-friendly interfaces using HTML, CSS, JavaScript (React, Angular, or
-                        Vue.js).</li>
-                    <li>Develop and maintain APIs, server-side logic, and databases using technologies such as Node.js,
-                        Ruby, or Java.</li>
-                    <li>Design and maintain databases (SQL, NoSQL) for efficiency and reliability.</li>
-                    <li>Write automated tests to ensure the quality of the application (unit, integration, and end-to-end
-                        testing).</li>
-                    <li>Work closely with designers, product managers, and engineers to understand requirements and
-                        implement features.</li>
-                </ul>
 
-                <h2 class="text-xl font-semibold mb-3">Skills required</h2>
-                <ul class="list-disc list-inside text-gray-700 space-y-2 text-sm">
-                    <li>Knowledge of HTML, CSS, and JavaScript, plus experience with frameworks like React, Angular, or
-                        Vue.js.</li>
-                    <li>Experience working with server-side languages such as Node.js, Python, Ruby, or Java.</li>
-                    <li>Familiarity with both relational databases (e.g., MySQL, PostgreSQL) and non-relational databases
-                        (e.g., MongoDB).</li>
-                    <li>Experience using Git for tracking changes and collaborating on code.</li>
-                    <li>Good communication and collaboration skills, able to work effectively with others.</li>
-                </ul>
 
                 <div class="pt-10">
                     @auth
@@ -127,9 +104,6 @@
 
             </div>
 
-
-
-
             <!-- Sidebar -->
             <div class="w-1/4 flex flex-col gap-y-8">
                 <div class="flex flex-colgap-6 justify-center sm:justify-start">
@@ -138,7 +112,7 @@
                         @foreach ($jobs as $job)
                             <div
                                 class="flex-none w-full sm:w-[260px] bg-white border border-gray-300 rounded-lg shadow-md p-6 hover:border-blue-500 dark:bg-gray-800">
-                                <img src="{{ asset('images/microsoft_logo.svg') }}" alt="Company Logo" class="mb-4">
+                                <img class="w-40" src="{{ asset('storage/' . $job->company_image) }}" alt="">
                                 <h3 class="text-lg font-semibold text-gray-800 dark:text-white">{{ $job->title }}</h3>
                                 <div class="flex items-center space-x-2 mt-2 mb-4">
                                     <span

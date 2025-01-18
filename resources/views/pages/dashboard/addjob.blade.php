@@ -5,7 +5,7 @@
         @section('content')
 
         <div class="w-[80%] p-6">
-            <form method="POST" action="{{ route('jobs.store') }}" class="flex flex-col gap-y-6 w-1/2">
+            <form method="POST" action="{{ route('jobs.store') }}" class="flex flex-col gap-y-6 w-1/2" enctype="multipart/form-data">
                 @csrf
                 <div class="flex flex-col gap-y-1" >
                     <label for="" class="dark:text-white">Job Title</label>
@@ -54,10 +54,26 @@
                 </div>
 
 
-                <div class="flex flex-col gap-y-1 w-1/4">
-                    <label for="" class="dark:text-white">Job Salary</label>
-                    <input name="salary" class="w-full border border-gray-400 rounded dark:bg-gray-800" type="number">
+                <div class="flex gap-x-3">
+
+
+                    <div class="flex flex-col gap-y-1 w-1/4">
+                        <label for="" class="dark:text-white">Job Salary</label>
+                        <input name="salary" class="w-full border border-gray-400 rounded dark:bg-gray-800" type="number">
+                    </div>
+
+                    <div class="flex flex-col gap-y-2 w-1/2">
+                        <label for="company_image" class="dark:text-white">Company Image</label>
+                        <input name="company_image" id="company_image" class="w-full border border-gray-400 rounded dark:bg-gray-800" type="file">
+                    </div>
+                    
+
                 </div>
+
+
+
+
+
 
 
                 <button type="submit" class="bg-gray-800 text-white px-4 py-2 rounded-lg w-[20%] dark:bg-gray-300 dark:text-gray-800">Add</button>

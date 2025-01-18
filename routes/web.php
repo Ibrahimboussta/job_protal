@@ -46,7 +46,7 @@ Route::get('/jobs/search', [JobController::class, 'search'])->name('jobs.search'
 
 Route::get('/jobs/filter/{category}', [JobController::class, 'filterByCategory'])->name('jobs.filter');
 
-
+Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
 
 
 require __DIR__.'/auth.php';

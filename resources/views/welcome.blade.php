@@ -207,16 +207,16 @@
                     <div class="flex flex-wrap gap-6 justify-center sm:justify-start">
                         <!-- Job Card -->
                         @if ($jobs->isEmpty())
-                            <div class="font-bold text-3xl pt-8 flex justify-center w-full text-gray-700">
+                            <div class="font-bold text-3xl pt-8 flex justify-center w-full text-gray-700 dark:text-white">
                                 No jobs found !🙄
                             </div>
                         @else
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                 @foreach ($jobs as $job)
                                     <div
-                                        class="flex-none w-full sm:w-[260px] bg-white border border-gray-300 rounded-lg shadow-md p-6 hover:border-blue-500 dark:bg-gray-800">
-                                        <img src="{{ asset('images/microsoft_logo.svg') }}" alt="Company Logo"
-                                            class="mb-4">
+                                        class="flex-none w-full sm:w-[260px] bg-white border border-gray-300 rounded-lg shadow-md p-6 hover:border-blue-500 dark:bg-gray-800 h-fit">
+                                        <img class="w-40 object-cover " src="{{ asset('storage/' . $job->company_image) }}" alt="">
+
                                         <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
                                             {{ $job->title }}</h3>
                                         <div class="flex items-center space-x-2 mt-2 mb-4">
@@ -251,6 +251,7 @@
                                             </button>
                                         </div>
                                     </div>
+
                                 @endforeach
                             </div>
                         @endif

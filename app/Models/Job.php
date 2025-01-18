@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Job extends Model
 {
     //
-
 
     protected $table = 'offres';
 
@@ -18,6 +18,8 @@ class Job extends Model
         'location',
         'levels',
         'salary',
+        'company_image',
+        'visble',
         'user_id',
     ];
 
@@ -32,4 +34,7 @@ class Job extends Model
     {
         return $this->hasMany(Apply::class);
     }
+
+
+   
 }
