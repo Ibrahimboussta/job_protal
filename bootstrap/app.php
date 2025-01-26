@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureUserIsAuthorized;
 use App\Http\Middleware\RoleRedirect;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -14,7 +15,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         //
         $middleware->alias([
-            'role' => RoleRedirect::class
+            'role' => RoleRedirect::class,
+            'candidat.role' => EnsureUserIsAuthorized::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

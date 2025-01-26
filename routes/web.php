@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddjobController;
 use App\Http\Controllers\ApplicationsController;
 use App\Http\Controllers\ApplyController;
+use App\Http\Controllers\CandidatController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\ManageJobController;
 use App\Http\Controllers\ProfileController;
@@ -29,9 +30,11 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/job/details/{jobId}', [JobController::class, 'details'])->name('job.details');
 
-Route::get('/addjobs', [AddjobController::class, 'index'])->name('addjobs');
-Route::get('/managejobs', [ManageJobController::class, 'index'])->name('managejobs');
-Route::get('/applications', [ApplicationsController::class, 'index'])->name('applications');
+Route::get('/addjobs', [AddjobController::class, 'index'])
+    ->name('addjobs')
+    ->middleware(['role']);
+Route::get('/managejobs', [ManageJobController::class, 'index'])->name('managejobs')->middleware(['role']);
+Route::get('/applications', [ApplicationsController::class, 'index'])->name('applications')->middleware(['role']);
 
 Route::post('/store', [JobController::class, 'store'])->name('jobs.store');
 
@@ -49,4 +52,23 @@ Route::get('/jobs/filter/{category}', [JobController::class, 'filterByCategory']
 Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
 
 
-require __DIR__.'/auth.php';
+
+Route::get('/candidat/dashboard', [CandidatController::class, 'index'])
+    ->name('candidat.dashboard')
+    ->middleware(['candidat.role']);
+
+
+Route::get('/candidat/statistiques', [CandidatController::class, 'statistiques'])
+    ->name('candidat.statistiques')
+    ->middleware(['candidat.role']);
+
+
+Route::get('/candidat/my-application', [CandidatController::class, 'myApplications'])
+    ->name('candidat.myapplications')
+    ->middleware(['candidat.role']);
+
+
+
+    Route::post('/update-status/{id}', [ApplyController::class, 'updateStatus'])->name('updateStatus');
+
+require __DIR__ . '/auth.php';

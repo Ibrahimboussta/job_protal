@@ -43,7 +43,7 @@ class RegisteredUserController extends Controller
     if ($request->hasFile('profile_image')) {
         $imagePath = $request->file('profile_image')->store('profile_images', 'public');
     }
-        
+
 
 
         $user = User::create([
@@ -63,8 +63,11 @@ class RegisteredUserController extends Controller
             $user->job()->attach($request->job_id);
         }
 
-        return $request->role === 'Recruter'
-            ? redirect()->route('dashboard')->with('success', 'Your account has been created!')
-            : redirect()->route('welcome')->with('success', 'Your account has been created!');
+
+        if ($request->role === 'Recruter') {
+            return redirect()->route('dashboard')->with('success', 'Your account has been created!');
+        } else {
+            return redirect()->route('welcome')->with('success', 'Your account has been created!');
+        }
     }
 }

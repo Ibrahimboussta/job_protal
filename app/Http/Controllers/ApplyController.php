@@ -57,4 +57,23 @@ class ApplyController extends Controller
         return redirect()->route('welcome')->with('success', 'Application submitted successfully!');
     }
 
+
+    // public function updateStatus(Request $request, $id)
+    // {
+    //     $application = Apply::findOrFail($id);
+
+    //     // Ensure 'status' is in the request
+    //     $status = $request->input('status'); // Should be 'accept' or 'reject'
+    //     if (!in_array($status, ['accept', 'reject'])) {
+    //         return response()->json(['success' => false, 'message' => 'Invalid status'], 400);
+    //     }
+
+    //     // Update the status in the database
+    //     $application->status = $status;
+    //     $application->save();
+
+    //     return response()->json(['success' => true, 'status' => $application->status]);
+    // }
+
+
 }

@@ -5,9 +5,18 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
+                    @if(Auth::user()->role === 'Recruter')
+
                     <a href="{{ route('dashboard') }}">
                         Job <span class="text-indigo-600">Portal</span>
                     </a>
+                    @else
+                    <a href="{{ route('welcome') }}">
+                        Job <span class="text-indigo-600">Portal</span>
+                    </a>
+
+                    @endif
+
                 </div>
 
                 <!-- Navigation Links -->
@@ -25,19 +34,15 @@
                         <button
                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                             {{-- @if (Auth::user()->role === 'Recruter' || Auth::user()->role === 'Candidate') --}}
-                                <div>
-                                    @if (Auth::user()->profile_image)
-                                        <img src="{{ asset('storage/' . Auth::user()->profile_image) }}"
-                                            alt="Profile Image" class="w-8 h-8 object-cover rounded-full">
-                                    @else
-                                        <img src="{{ asset('storage/default-avatar.png') }}" alt="Default Profile Image"
-                                            class="w-8 h-8 object-cover rounded-full">
-                                    {{-- @endif --}}
-                                </div>
-                            @endif
-
-
-
+                            <div>
+                                @if (Auth::user()->profile_image)
+                                    <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="Profile Image"
+                                        class="w-8 h-8 object-cover rounded-full">
+                                @else
+                                    <img src="{{ asset('storage/default-avatar.png') }}" alt="Default Profile Image"
+                                        class="w-8 h-8 object-cover rounded-full">
+                                @endif
+                            </div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -50,22 +55,48 @@
                         </button>
                     </x-slot>
 
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
 
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                    @if (Auth::user()->role === 'Recruter')
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('profile.edit')">
+                                {{ __('Profile') }}
                             </x-dropdown-link>
-                        </form>
-                    </x-slot>
+
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    @elseif(Auth::user()->role === 'Candidate')
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('profile.edit')">
+                                {{ __('Profile') }}
+                            </x-dropdown-link>
+
+                            <x-dropdown-link :href="route('candidat.dashboard')">
+                                {{ __('Dashboard') }}
+                            </x-dropdown-link>
+
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    @endif
+
+
                 </x-dropdown>
             </div>
 
@@ -88,9 +119,14 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+
+            @if(Auth::user()->role === 'Recruter')
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @elseif(Auth::user()->role === 'Candidate')
+            <x-responsive-nav-link :href="route('candidat.dashboard')" :active="request()->routeIs('candidat.dashboard')">Dashboard</x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

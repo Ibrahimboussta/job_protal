@@ -22,6 +22,9 @@
 
             <!-- Desktop Menu -->
             @auth
+                @if (Auth::user()->role === 'Recruter')
+                @else
+                @endif
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
@@ -29,8 +32,8 @@
                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                                 <div>
                                     @if (Auth::user()->profile_image)
-                                        <img src="{{ asset('storage/' . Auth::user()->profile_image) }}"
-                                            alt="Profile Image" class="w-8 h-8 object-cover rounded-full">
+                                        <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="Profile Image"
+                                            class="w-8 h-8 object-cover rounded-full">
                                     @else
                                         <img src="{{ asset('storage/default-avatar.png') }}" alt="Default Profile Image"
                                             class="w-8 h-8 object-cover rounded-full">
@@ -52,20 +55,23 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
+                            <x-dropdown-link :href="route('candidat.dashboard')">
+                                {{ __('Dashboard') }}
+                            </x-dropdown-link>
+
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
 
                                 <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
-                                                this.closest('form').submit();">
+                                            this.closest('form').submit();">
                                     {{ __('Log Out') }}
                                 </x-dropdown-link>
                             </form>
                         </x-slot>
                     </x-dropdown>
                 </div>
-
             @endauth
 
 
@@ -73,7 +79,8 @@
             @guest
 
                 <nav class="hidden md:flex items-center ">
-                    <a href="{{ route('register') }}" class="font-normal rounded-full text-black px-1 flex items-center">Register
+                    <a href="{{ route('register') }}"
+                        class="font-normal rounded-full text-black px-1 flex items-center dark:text-white">Register
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -109,7 +116,8 @@
             </button>
         </div>
         <div class="p-4 flex flex-col items-center">
-            <a href="{{ route('register') }}" class="font-normal rounded-full text-black px-1 flex items-center">Register
+            <a href="{{ route('register') }}"
+                class="font-normal rounded-full text-black px-1 flex items-center">Register
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"

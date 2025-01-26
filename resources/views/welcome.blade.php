@@ -215,7 +215,7 @@
                                 @foreach ($jobs as $job)
                                     <div
                                         class="flex-none w-full sm:w-[260px] bg-white border border-gray-300 rounded-lg shadow-md p-6 hover:border-blue-500 dark:bg-gray-800 h-fit">
-                                        <img class="w-40 object-cover " src="{{ asset('storage/' . $job->company_image) }}" alt="">
+                                        <img class="w-40 object-cover " src="{{ asset('storage/' . $job->user->profile_image) }}" alt="">
 
                                         <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
                                             {{ $job->title }}</h3>

@@ -43,7 +43,7 @@ class JobController extends Controller
             'location' => 'required',
             'levels' => 'required',
             'salary' => 'required|numeric',
-            'company_image' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
+            // 'company_image' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
             'visible' => 'boolean', // Ensure it's a boolean
         ]);
 
@@ -53,10 +53,10 @@ class JobController extends Controller
             return redirect()->route('login')->withErrors('You must be logged in to create a job.');
         }
 
-        $imageName = null;
-        if ($request->hasFile('company_image')) {
-            $imageName = $request->file('company_image')->store('company_images', 'public');
-        }
+        // $imageName = null;
+        // if ($request->hasFile('company_image')) {
+        //     $imageName = $request->file('company_image')->store('company_images', 'public');
+        // }
 
         // Create the job (offre) entry
         Job::create([
@@ -66,7 +66,7 @@ class JobController extends Controller
             'location' => $request->location,
             'levels' => $request->levels,
             'salary' => $request->salary,
-            'company_image' => $imageName,
+            // 'company_image' => $imageName,
             'visible' => $request->has('visible'), // Checkbox returns true if checked, false otherwise
             'user_id' => $user->id, // Explicitly associate the job with the user
         ]);
@@ -114,18 +114,18 @@ class JobController extends Controller
         if (Auth::user()->id !== $job->user_id) {
             return redirect()->route('managejobs')->withErrors('You are not authorized to delete this job.');
         }
-    
+
         // Delete the job's associated company image if it exists
         if ($job->company_image) {
             Storage::disk('public')->delete($job->company_image);
         }
-    
+
         // Delete the job entry from the database
         $job->delete();
-    
+
         // Redirect with a success message
         return redirect()->route('managejobs')->with('success', 'Job deleted successfully!');
     }
-    
-    
+
+
 }

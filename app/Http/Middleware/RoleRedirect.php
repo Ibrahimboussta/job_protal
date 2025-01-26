@@ -16,12 +16,19 @@ class RoleRedirect
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role == 'Recruter') {
-            return $next($request);
-        }else{
-            return redirect()->route('welcome');
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            // Check if the user's role matches 'Recruter'
+            if (Auth::user()->role === 'Recruter') {
+                return $next($request); // Allow the request to proceed
+            }
+
+            // If the user is authenticated but not a 'Recruter', abort with a 403 error
+            // abort(403, 'Unauthorized: You must be a Recruter to access this page.');
         }
 
-        abort(403, 'Unauthorized action.');
+        // If the user is not authenticated, redirect to the 'welcome' route
+        return redirect()->route('welcome');
+
     }
 }

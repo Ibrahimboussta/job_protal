@@ -19,6 +19,7 @@ return new class extends Migration
                 $table->string('address');
                 $table->string('city');
                 $table->string('resume'); // Store path to the file
+                $table->string('status')->nullable();
                 $table->timestamps();
 
                 $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete(); // Link to users table

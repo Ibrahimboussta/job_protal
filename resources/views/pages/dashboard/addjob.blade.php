@@ -62,11 +62,11 @@
                         <input name="salary" class="w-full border border-gray-400 rounded dark:bg-gray-800" type="number">
                     </div>
 
-                    <div class="flex flex-col gap-y-2 w-1/2">
+                    {{-- <div class="flex flex-col gap-y-2 w-1/2">
                         <label for="company_image" class="dark:text-white">Company Image</label>
                         <input name="company_image" id="company_image" class="w-full border border-gray-400 rounded dark:bg-gray-800" type="file">
                     </div>
-                    
+                     --}}
 
                 </div>
 

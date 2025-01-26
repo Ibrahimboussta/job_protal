@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Models\Apply;
 use App\Models\Job;
+use Illuminate\Console\Application;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
-
+use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,5 +39,12 @@ class AppServiceProvider extends ServiceProvider
         //     $applications = \App\Models\Apply::with('job')->latest()->get();
         //     view()->share('applications', $applications);
         // }
+
+
+        if (Auth::check()) {
+            $candidateJobApplications = Application::where('user_id', Auth::user()->id)->count();
+
+            view()->share('candidateJobApplications', $candidateJobApplications);
+        }
     }
 }

@@ -33,9 +33,15 @@
                                 <tr class="border-t border-gray-200">
                                     <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">{{ $job->id }}</td>
                                     <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">
-                                        <img class="w-40"
-                                            src="{{ $job->company_image ? asset('storage/' . $job->company_image) : asset('default-image.jpg') }}"
-                                            alt="Company Image">
+                                        <div>
+                                            @if (Auth::user()->profile_image)
+                                                <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="Profile Image"
+                                                    class="w-40 object-cover rounded-full">
+                                            @else
+                                                <img src="{{ asset('storage/default-avatar.png') }}" alt="Default Profile Image"
+                                                    class="w-40 object-cover rounded-full">
+                                            @endif
+                                        </div>
                                     </td>
                                     <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">{{ $job->title }}</td>
                                     <td class="py-4 px-4 text-sm dark:text-white dark:bg-gray-800">{{ $job->category }}</td>
@@ -55,9 +61,9 @@
                                                     </svg>
                                                 </button>
                                             </form>
-                                            
+
                                         </td>
-                                        
+
                                 </tr>
                             @endif
                         @endforeach

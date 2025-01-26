@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('location');
             $table->string('levels');
             $table->integer('salary');
-            $table->string('company_image')->nullable();
+            // $table->string('company_image')->nullable();
             $table->boolean('visible')->default(true);
             $table->foreignId('user_id') // Foreign key reference to users table
                 ->constrained()

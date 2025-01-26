@@ -50,9 +50,12 @@
                                         class="status-dropdown border border-gray-400 rounded px-7 py-1"
                                         onchange="updateStatus({{ $application->id }})">
                                         <option value="" disabled selected>Select</option>
-                                        <option value="accept">Accept</option>
-                                        <option value="reject">Reject</option>
+                                        <option value="accept" {{ $application->status === 'accept' ? 'selected' : '' }}>
+                                            Accept</option>
+                                        <option value="reject" {{ $application->status === 'reject' ? 'selected' : '' }}>
+                                            Reject</option>
                                     </select>
+
                                 </td>
                             </tr>
                         @endforeach
@@ -115,6 +118,38 @@
                 dropdown.classList.add("bg-red-200");
             }
         }
+
+
+
+        // function updateStatus(id) {
+        //     const dropdown = document.getElementById(`status_${id}`);
+        //     const status = dropdown.value;
+
+        //     // Send the request to update the status
+        //     fetch(`/update-status/${id}`, {
+        //             method: "POST",
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+        //             },
+        //             body: JSON.stringify({
+        //                 status: status
+        //             }),
+        //         })
+        //         .then((response) => response.json())
+        //         .then((data) => {
+        //             if (data.success) {
+        //                 alert(`Status updated to ${data.status}`);
+        //                 window.location.reload(); // Reload to reflect changes
+        //             } else {
+        //                 alert("Failed to update status");
+        //             }
+        //         })
+        //         .catch((error) => {
+        //             console.error("Error updating status:", error);
+        //             alert("An error occurred while updating the status.");
+        //         });
+        // }
     </script>
 
 
